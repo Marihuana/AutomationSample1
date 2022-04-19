@@ -1,7 +1,6 @@
 name: Android Fastlane
 
 on:
-  push:
   pull_request:
     branches: 
       - qa
