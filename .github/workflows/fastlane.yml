@@ -1,7 +1,6 @@
 name: Android Fastlane
 
 on:
-  push:
   pull_request:
     branches: 
       - qa
@@ -14,7 +13,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: set up JDK 11
-      uses: actions/setup-java@vv3.1.1
+      uses: actions/setup-java@v3.1.1
       with:
         java-version: 11
 
