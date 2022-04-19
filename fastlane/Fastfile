@@ -16,6 +16,43 @@
 default_platform(:android)
 
 platform :android do
+  
+  desc "auto deploy for qa"
+  lane :qa do
+    build_android
+    firebase_distribution
+    #notify
+  end
+
+  desc "build android"
+  lane :build_android do 
+    gradle(task: "clean assembleRelease -PisDebug=true")
+  end
+
+  lane :firebase_distribution do 
+    appId = "1:402317277990:android:b1e02e33fc8c9de58c1fe7"
+
+    firebase_app_distribution(
+      app: appId,
+      service_credentials_file: "./fastlane/automationsample1-9b88e-e3777b523e09.json",
+      groups: "qa",
+      release_notes: "배포 테스트중...",
+      debug: true
+    )
+  end
+
+  lane :notify_on_slack do 
+    message = ""
+    webhookUrl = ""
+
+    slack(
+      slack_url: webhookUrl,
+      username: "Notifier",
+      icon_url: "",
+      message: message
+    )
+  end
+
   desc "Runs all the tests"
   lane :test do
     gradle(task: "test")
